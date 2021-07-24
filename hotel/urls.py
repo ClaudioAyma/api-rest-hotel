@@ -17,7 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
+from .router import router
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-hotel/', include('api_hotel.urls'))
+    path('api-hotel/', include('api_hotel.urls')),
+    path('api/', include(router.urls))
 ]

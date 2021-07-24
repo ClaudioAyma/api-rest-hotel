@@ -18,19 +18,21 @@ class clienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
         fields = [
+            'id',
             'nombre',
             'apellido',
             'cedula_identidad'
         ]
 
-class reservaSerializer(serializers.ModelSerializer):
+class reservaGetSerializer(serializers.ModelSerializer):
 
-    # client = serializers.StringRelatedField()
-    # room = serializers.StringRelatedField()
+    cliente = serializers.StringRelatedField()
+    habitacion = serializers.StringRelatedField()
     
     class Meta:
         model = Reserva
         fields = [
+            'id',
             'estado',
             'habitacion',
             'cliente',
@@ -39,3 +41,19 @@ class reservaSerializer(serializers.ModelSerializer):
             'metodo_de_pago',
             'monto',
         ]
+
+class reservaSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Reserva
+        fields = [
+            'id',
+            'estado',
+            'habitacion',
+            'cliente',
+            'estadia_inicio',
+            'estadia_final',
+            'metodo_de_pago',
+            'monto',
+        ]
+

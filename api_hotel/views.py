@@ -4,7 +4,7 @@ from rest_framework import serializers, status
 
 from .models import Habitacion, Cliente, Reserva
 
-from api_hotel.serializer import habitacionSerializer, clienteSerializer, reservaSerializer
+from api_hotel.serializers import habitacionSerializer, clienteSerializer, reservaGetSerializer, reservaSerializer
 
 class habitacionView(APIView):
     """ Api de habitacion """
@@ -77,8 +77,9 @@ class clienteView(APIView):
 class reservaView(APIView):
     """ Api de reserva """
 
-    # Serializando los valores recibidos mediante post
     serializer_class = reservaSerializer
+    serializer_class_get = reservaGetSerializer
+    serializer_class_post = reservaSerializer
 
 
     def get(self, request, format=None):
@@ -87,7 +88,7 @@ class reservaView(APIView):
         reservas = Reserva.objects.all()
 
         # Serializando los registros
-        serializer = self.serializer_class(reservas, many=True)
+        serializer = self.serializer_class_get(reservas, many=True)
 
         # Retornando los registros
         return Response(serializer.data)
@@ -95,7 +96,7 @@ class reservaView(APIView):
     def post(self, request):
 
         # Serializando los valores recibidos mediante post
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class_post(data=request.data)
 
         if serializer.is_valid():
 
@@ -111,3 +112,4 @@ class reservaView(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+
